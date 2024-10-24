@@ -1,0 +1,26 @@
+{
+  "name": "express-codemod",
+  "version": "1.0.0",
+  "main": "index.js",
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kjugi/express-codemod.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/kjugi/express-codemod/issues"
+  },
+  "homepage": "https://github.com/kjugi/express-codemod#readme",
+  "description": "",
+  "dependencies": {
+    "commander": "^12.1.0",
+    "jscodeshift": "^17.0.0"
+  }
+}
