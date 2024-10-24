@@ -2,28 +2,30 @@ const { Command } = require("commander")
 const jscodeshift = require("jscodeshift")
 const packageJson = require('./package.json')
 const { resolve } = require('node:path');
-const { existsSync, lstatSync, readFileSync } = require("node:fs");
+const { existsSync, lstatSync, readFileSync, writeFileSync } = require("node:fs");
 
 const program = new Command();
 const j = jscodeshift
 
 const convertDeprecated = (filePath) => {
     const fileContent = readFileSync(filePath).toString()
-    const fileAst = j(fileContent)
-        .find(j.CallExpression)
-        .get()
-    // .map(path => {
-    //     console.log(path)
-    //     // if (path.)
-    //     // j(path).replaceWith(
-    //     //     j.identifier(path.node.name.split('').reverse().join(''))
-    //     // );
-    // })
-    // .toSource();
+    const newFileContent = j(fileContent)
+        .find(j.CallExpression, {
+            callee: {
+                property: {
+                    name: 'redirect'
+                }
+            }
+        })
+        .map(path => {
+            if (path.value.arguments.length === 2) {
+                path.value.arguments.reverse()
+            }
+        })
+        .toSource();
 
-    console.log(fileAst)
     // Save new file content
-
+    writeFileSync(filePath, newFileContent)
 }
 
 program
